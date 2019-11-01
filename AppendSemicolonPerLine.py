@@ -11,7 +11,6 @@ def fetch_file_name(dir_path):
                 array.append(os.path.join(file))
     return array
 
-
 def appendSymbolToNewFile(originFileName, newFileName):
     ff = open(newFileName, 'w')
     with open(originFileName, 'r') as f:
@@ -19,9 +18,8 @@ def appendSymbolToNewFile(originFileName, newFileName):
         for line_list in line:
             line_new = line_list.replace('\r\n','')
             line_new = line_new + ';' + '\r\n'
-            print(line_new)
+            # print(line_new)
             ff.write(line_new)
-
 
 def createSameNameMarkDownFile(filename):
         """
@@ -41,6 +39,6 @@ def createSameNameMarkDownFile(filename):
 file_name_arrays = fetch_file_name(directory_path)
 for file_name in file_name_arrays:
     markdown_file_name = file_name.replace('.txt', '.md')
-    createSameNameMarkDownFile(markdown_file_name)
     # print(markdown_file_name)
+    createSameNameMarkDownFile(markdown_file_name)
     appendSymbolToNewFile(file_name, markdown_file_name)
