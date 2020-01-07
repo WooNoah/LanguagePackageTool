@@ -38,32 +38,81 @@ def createSameNameMarkDownFile(filename):
             pass
 
 
+
+
 def reStep1Function(matchObj):
+    string = matchObj.group()
+    return string.replace('\\ \"', '\\\"')
+    pass
+
+def reStep2Function(matchObj):
     # print(matchObj.group())
     string = matchObj.group()
     resultString = string.replace('\"','\\\"')
     return resultString
     pass
 
-def reStep2Function(matchObj):
+def reStep3Function(matchObj):
     string = matchObj.group()
-    return string.replace('\\ \"', '\\\"')
+    resultString = string.replace('\"','\\\"')
+    return resultString
     pass
 
-def regularExpressionReplacementStep1(originFileName, tempFileName):
+def reStep4Function(matchObj):
+    string = matchObj.group()
+    str_list = list(string)
+    str_list.insert(1, '\\')
+    resultString = ''.join(str_list)
+    return resultString
+    pass
+
+def reStep5Function(matchObj):
+    string = matchObj.group()
+    resultString = string.replace(' ','')
+    return resultString
+    pass
+
+def reStep6Function(matchObj):
+    string = matchObj.group()
+    string1 = string.replace('\"','\\\"')
+    resultString = string1[:-1]
+    return resultString
+    pass
+
+def regularExpressionReplacementPhase(originFileName, tempFileName):
     # 匹配auf "Registrieren"这种格式的字符串，然后改为auf \"Registrieren\"
-#    reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")"
+    #reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")" 
+
+#2. \w\s+\"+[\w\s]+\"           筛选 click "Solved" or the "Service Agreement"这种情况
+#3. [\w\"]+\"[A-Za-z_]+\"       筛选 "HB_000066"=",click"Setting" to enter the page";这个
+#4. [\"]+\"\w+\"                筛选 "_001015"=""पंजीकरण" पर क्लिक करने这种情况
+#5. \\\s+\"                     筛选 \ "这种情况
+#6. \w+\"\\                     删选 đặt"\这种情况
+
+    
+
     # 匹配sur \ "Paramètres \" - \ "Accès这种格式的字符串，然后改为sur \"Paramètres \" - \"Accès
-    reString2 = r"([\s]+\\[\s]+\"[A-Za-z0-9_\s]+?)"
+    reString1 = r"([\s]+\\[\s]+\"[A-Za-z0-9_\s]+?)"
+    reString2 = r"(\w\s+\"+[\w\s]+\")"
+    reString3 = r"([\w\"]+\"[A-Za-z_]+\")"
+    reString4 = r"([\"]+\"\w+\")"
+    reString5 = r"(\\\s+\")"
+    reString6 = r"(\w+\"\\)"
+
+
     ff = open(tempFileName, mode="w")
     with open(originFileName, 'r') as f:
         line = f.readlines()
         for line_list in line:
-#            line_add_backslash = re.sub(reString1, reStep1Function, line_list)    # 添加反斜杠
-            line_remove_middle_space = re.sub(reString2, reStep2Function, line_list)  # 移除\ "中间的空格
+           tempString1 = re.sub(reString1, reStep1Function, line_list)  # 移除\ "中间的空格
+           tempString2 = re.sub(reString2, reStep2Function, tempString1)    # 添加反斜杠
+           tempString3 = re.sub(reString3, reStep3Function, tempString2)
+           tempString4 = re.sub(reString4, reStep4Function, tempString3)
+           tempString5 = re.sub(reString5, reStep5Function, tempString4)
+           tempString6 = re.sub(reString6, reStep6Function, tempString5)
             # line_new = line_remove_middle_space.replace('\\ n', '\\n')
             # print(line_new)
-            ff.write(line_remove_middle_space)
+            ff.write(tempString6)
         pass
 
 
@@ -80,7 +129,7 @@ for file_name in file_name_arrays:
     markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
 #     # print(markdown_temp_file_name)
     createSameNameMarkDownFile(markdown_file_name)
-    regularExpressionReplacementStep1(file_name, markdown_temp_file_name)
+    regularExpressionReplacementPhase(file_name, markdown_temp_file_name)
     appendSymbolToNewFile(markdown_temp_file_name, markdown_file_name)
     pass
 
