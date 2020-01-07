@@ -52,15 +52,15 @@ def reStep2Function(matchObj):
 
 def regularExpressionReplacementStep1(originFileName, tempFileName):
     # 匹配auf "Registrieren"这种格式的字符串，然后改为auf \"Registrieren\"
-    reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")"
+#    reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")"
     # 匹配sur \ "Paramètres \" - \ "Accès这种格式的字符串，然后改为sur \"Paramètres \" - \"Accès
     reString2 = r"([\s]+\\[\s]+\"[A-Za-z0-9_\s]+?)"
     ff = open(tempFileName, mode="w")
     with open(originFileName, 'r') as f:
         line = f.readlines()
         for line_list in line:
-            line_add_backslash = re.sub(reString1, reStep1Function, line_list)    # 添加反斜杠
-            line_remove_middle_space = re.sub(reString2, reStep2Function, line_add_backslash)  # 移除\ "中间的空格
+#            line_add_backslash = re.sub(reString1, reStep1Function, line_list)    # 添加反斜杠
+            line_remove_middle_space = re.sub(reString2, reStep2Function, line_list)  # 移除\ "中间的空格
             # line_new = line_remove_middle_space.replace('\\ n', '\\n')
             # print(line_new)
             ff.write(line_remove_middle_space)
@@ -87,7 +87,7 @@ for file_name in file_name_arrays:
 for file_name in file_name_arrays:
     markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
     removeGarbageFile(markdown_temp_file_name)
-    removeGarbageFile(file_name)
+#    removeGarbageFile(file_name)
     pass
 
 # for file_name in file_name_arrays:
