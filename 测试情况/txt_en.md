@@ -1,0 +1,7 @@
+"HB_000020"="With exposure done,please click "Solved""
+"_018092"="Please agree to the "Service Agreement""
+"_018051"="Please click "Settings" to allow the permission"
+"_001072"="[Please note] You have read and agreed  to our 《Service Agreement》 and 《Privacy Policy》 by clicking "Yes". We will do our best to protect your personal information and legal rights. Thank you again for your trust."
+"_002002"="Company Name/Registration No."
+"_002001"="Legit or Scam,One Click Away"
+"_001070"="Agree"

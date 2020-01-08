@@ -50,7 +50,7 @@ def reStep1Function(matchObj):
 def reStep2Function(matchObj):
     # print(matchObj.group())
     string = matchObj.group()
-    # print(matchObj.group())
+    print(matchObj.group())
     resultString = string.replace('\"','\\\"')
     # print(resultString)
     return resultString
@@ -85,7 +85,7 @@ def reStep6Function(matchObj):
 
 def regularExpressionReplacementPhase(originFileName, tempFileName):
     # 匹配auf "Registrieren"这种格式的字符串，然后改为auf \"Registrieren\"
-    #reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")"
+    #reString1 = r"(\w\s+\"+[\w\s]+\")|(\\+\s+\"+[\w]+\s+\\+\”)|([\w\"]\"[A-Za-z0-9_\\\s]+\")" 
 
 #2. \w\s+\"+[\w\s]+\"           筛选 click "Solved" or the "Service Agreement"这种情况
 #3. [\w\"]+\"[A-Za-z_]+\"       筛选 "HB_000066"=",click"Setting" to enter the page";这个
@@ -98,8 +98,8 @@ def regularExpressionReplacementPhase(originFileName, tempFileName):
     # 匹配sur \ "Paramètres \" - \ "Accès这种格式的字符串，然后改为sur \"Paramètres \" - \"Accès
     reString1 = r"([\s]+\\[\s]+\"[A-Za-z0-9_\s]+?)"
     # reString2 = r"(\w\s+\"+[\w\s]+\")"
-    # reString2 = r"([\uAA80-\uAADF\u20000-\u2FFFD\w]\s+\"+[\w\s]+\")"
-    reString2 = r"([\w]+\s+\"[^\\]+?\")"
+    # reString2 = r"([\uAA80-\uAADF\u20000-\u2FFFD\w]\s+\"+[\w\s]+\")" 
+    reString2 = r"([^]+?\s+\"[^\\]+?\")"
     # reString3 = r"([\w\"]+\"[A-Za-z_]+\")"
     reString4 = r"(\"+\"\w+\")"
     reString5 = r"(\\\s+\")"
@@ -111,15 +111,15 @@ def regularExpressionReplacementPhase(originFileName, tempFileName):
         line = f.readlines()
         for line_list in line:
             # print(line_list)
-            tempString1 = re.sub(reString1, reStep1Function, line_list)  # 移除\ "中间的空格
-            tempString2 = re.sub(reString2, reStep2Function, tempString1)    # 添加反斜杠
+            # tempString1 = re.sub(reString1, reStep1Function, line_list)  # 移除\ "中间的空格
+            tempString2 = re.sub(reString2, reStep2Function, line_list)    # 添加反斜杠
             # tempString3 = re.sub(reString3, reStep3Function, tempString2)
-            tempString4 = re.sub(reString4, reStep4Function, tempString2)
-            tempString5 = re.sub(reString5, reStep5Function, tempString4)
-            tempString6 = re.sub(reString6, reStep6Function, tempString5)
+            # tempString4 = re.sub(reString4, reStep4Function, tempString2)
+            # tempString5 = re.sub(reString5, reStep5Function, tempString4)
+            # tempString6 = re.sub(reString6, reStep6Function, tempString5)
             # line_new = line_remove_middle_space.replace('\\ n', '\\n')
             # print(tempString2)
-            ff.write(tempString6)
+            ff.write(tempString2)
         pass
 
 
@@ -132,20 +132,20 @@ def removeGarbageFile(deleteFileName):
 
 file_name_arrays = fetch_file_name(directory_path)
 for file_name in file_name_arrays:
-    markdown_file_name = file_name.replace('.txt', '.md')
-    markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
+    markdown_file_name = file_name.replace('.txt', '.json')
+    markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.json"
 #     # print(markdown_temp_file_name)
-    createSameNameMarkDownFile(markdown_file_name)
+    # createSameNameMarkDownFile(markdown_file_name)
     regularExpressionReplacementPhase(file_name, markdown_temp_file_name)
-    appendSymbolToNewFile(markdown_temp_file_name, markdown_file_name)
+    # appendSymbolToNewFile(markdown_temp_file_name, markdown_file_name)
     pass
 
-for file_name in file_name_arrays:
-    markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
-    removeGarbageFile(markdown_temp_file_name)
-#    removeGarbageFile(file_name)
-    pass
-    
+# for file_name in file_name_arrays:
+#     markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
+#     removeGarbageFile(markdown_temp_file_name)
+# #    removeGarbageFile(file_name)
+#     pass
+
 
 
 
