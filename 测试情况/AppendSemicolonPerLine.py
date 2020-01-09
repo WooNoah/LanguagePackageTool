@@ -129,11 +129,13 @@ def removeGarbageFile(deleteFileName):
        os.remove(deleteFileName)
        pass
 
+def test():
+    pass
 
 file_name_arrays = fetch_file_name(directory_path)
 for file_name in file_name_arrays:
-    markdown_file_name = file_name.replace('.txt', '.json')
-    markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.json"
+    markdown_file_name = file_name.replace('.txt', '.md')
+    markdown_temp_file_name = file_name.replace('.txt', '') + "_temp.md"
 #     # print(markdown_temp_file_name)
     # createSameNameMarkDownFile(markdown_file_name)
     regularExpressionReplacementPhase(file_name, markdown_temp_file_name)
