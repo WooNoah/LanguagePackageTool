@@ -1,7 +1,6 @@
 import os
 
-# Project_LanguagePackage_Dir=r'../wikifx/ZJNews/Sources/LocalibSource/'
-Project_LanguagePackage_Dir=r'../TestDirectory/'
+Project_LanguagePackage_Dir=r'../wikifx/ZJNews/Sources/LocalibSource/'
 Current_Direct=r'./'
 
 
@@ -20,7 +19,7 @@ def fetch_file_name(dir_path):
     	# print(root, dirs, files)
         for file in files:
 			# print(file)
-            if os.path.splitext(file)[1] == '.txt':
+            if os.path.splitext(file)[1] == '.md':
             	array.append(os.path.splitext(file)[0])
     return array
 
@@ -28,10 +27,10 @@ def matchDirWithFileName(file_name, dir_name):
 	fileNameShort = file_name.split('_')[-1]
 	dirNameShort = dir_name.split('.')[0]
 	if fileNameShort == dirNameShort:
-		print(file_name + " and " + dir_name + " is Ture")
+		# print(file_name + " and " + dir_name + " is Ture")
 		return True
 	elif mapNameForShort(fileNameShort) == dirNameShort:
-		print(file_name + " and " + dir_name + " is Ture")
+		# print(file_name + " and " + dir_name + " is Ture")
 		return True
 	else:
 		return False
@@ -74,4 +73,4 @@ for txt_file_name in txtArr:
 	for dir_name in ppDirArr:
 		# print(matchDirWithFileName(txt_file_name, dir_name))
 		if matchDirWithFileName(txt_file_name, dir_name):
-			transactionReadWrite(txt_file_name+".txt", getSpecificWriteFileName(dir_name))
+			transactionReadWrite(txt_file_name+".md", getSpecificWriteFileName(dir_name))
